@@ -1,10 +1,7 @@
-﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel.DataAnnotations;
-using System.Text;
-
-namespace Library.Data.Models
+﻿namespace Library.Data.Models
 {
+    using System.ComponentModel.DataAnnotations;
+
     public class BranchHours
     {
         public int Id { get; set; }

@@ -18,5 +18,10 @@
 
 
         public LibraryCard LibraryCard { get; set; }
+
+
+        public LibraryBranch LibraryBranch { get; set; }
+
+        public int LibraryBranchId { get; set; }
     }
 }

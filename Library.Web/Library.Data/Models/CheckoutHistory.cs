@@ -1,9 +1,7 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
-
-namespace Library.Data.Models
+﻿namespace Library.Data.Models
 {
+    using System;
+
     public class CheckoutHistory
     {
         public int Id { get; set; }

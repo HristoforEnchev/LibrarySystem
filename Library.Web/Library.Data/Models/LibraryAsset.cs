@@ -33,5 +33,8 @@
 
 
         public List<CheckoutHistory> CheckoutHistory { get; set; } = new List<CheckoutHistory>();
+
+
+        public List<Hold> Holds { get; set; } = new List<Hold>();
     }
 }

@@ -2,13 +2,11 @@
 {
     using System;
 
-    public class Checkout
+    public class Hold
     {
         public int Id { get; set; }
 
-        public DateTime Since { get; set; }
-
-        public DateTime Until { get; set; }
+        public DateTime HoldPlaced { get; set; }
 
 
         public LibraryCard LibraryCard { get; set; }
@@ -19,7 +17,6 @@
         public LibraryAsset LibraryAsset { get; set; }
 
         public int LibraryAssetId { get; set; }
-
 
     }
 }
