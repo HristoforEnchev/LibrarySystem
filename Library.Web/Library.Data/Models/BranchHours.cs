@@ -13,7 +13,7 @@
         public int OpenTime { get; set; }
 
         [Range(0, 23)]
-        public int CloseItem { get; set; }
+        public int CloseTime { get; set; }
 
 
         public LibraryBranch LibraryBranch { get; set; }
