@@ -94,7 +94,7 @@
                 .Where(la => la.Id == id)
                 .FirstOrDefault()
                 .GetType()
-                .ToString();
+                .Name;
         }
 
         public string GetAuthorOrDirector(int id)

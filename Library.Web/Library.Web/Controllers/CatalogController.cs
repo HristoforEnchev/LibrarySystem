@@ -36,5 +36,27 @@
                 Assets = result
             });
         }
+
+        public IActionResult Detail(int id)
+        {
+            var asset = this.libraryAssets.GetById(id);
+
+            var model = new AssetDetailModel
+            {
+                Id = id,
+                Title = asset.Title,
+                Year = asset.Year,
+                Cost = asset.Cost,
+                Status = asset.Status.Name,
+                ImageUrl = asset.ImageUrl,
+                AuthorOrDirector = this.libraryAssets.GetAuthorOrDirector(id),
+                CurrentLocation = asset.LibraryBranch.Name,
+                DeweyCallNumber = this.libraryAssets.GetDeweyIndex(id),
+                ISBN = this.libraryAssets.GetIsbn(id),
+                Type = this.libraryAssets.GetType(id)
+            };
+
+            return View(model);
+        }
     }
 }

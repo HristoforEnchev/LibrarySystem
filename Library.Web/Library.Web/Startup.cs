@@ -25,6 +25,7 @@
                 options.UseSqlServer(Configuration.GetConnectionString("DefaultConnection")));
 
             services.AddTransient<ILibraryAssetService, LibraryAssetService>();
+            services.AddTransient<ICheckoutService, CheckoutService>();
 
             services.AddMvc();
         }
