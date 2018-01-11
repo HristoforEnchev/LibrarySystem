@@ -1,6 +1,7 @@
 ﻿namespace Library.Services
 {
     using Data.Models;
+    using Library.Services.Models;
     using System;
     using System.Collections.Generic;
 
@@ -16,7 +17,9 @@
 
         void CheckOutItem(int assetId, int libraryCardId);
 
-        void CheckInItem(int assetId, int libraryCardId);
+        bool IsCheckedOut(int assetId);
+
+        void CheckInItem(int assetId);
 
         IEnumerable<CheckoutHistory> GetCheckoutHistory(int assetId);
 
@@ -29,7 +32,7 @@
 
         DateTime GetCurrentHoldPlaced(int holdId);
 
-        IEnumerable<Hold> GetCurrentHolds(int assetId);
+        IEnumerable<HoldServiceModel> GetCurrentHolds(int assetId);
 
 
         void MarkLost(int assetId);

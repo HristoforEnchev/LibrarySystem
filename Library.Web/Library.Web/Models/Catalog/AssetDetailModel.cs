@@ -1,6 +1,7 @@
 ﻿namespace Library.Web.Models.Catalog
 {
     using Library.Data.Models;
+    using Library.Services.Models;
     using System.Collections.Generic;
 
     public class AssetDetailModel
@@ -33,13 +34,6 @@
 
         public IEnumerable<CheckoutHistory> CheckoutHistory { get; set; }
 
-        public IEnumerable<AssetHoldModel> CurrentHolds { get; set; }
-    }
-
-    public class AssetHoldModel
-    {
-        public string PatronName { get; set; }
-
-        public string HoldPlaced { get; set; }
+        public IEnumerable<HoldServiceModel> CurrentHolds { get; set; }
     }
 }

@@ -2,6 +2,7 @@
 {
     using Library.Data;
     using Library.Data.Models;
+    using Library.Services.Models;
     using Microsoft.EntityFrameworkCore;
     using System;
     using System.Collections.Generic;
@@ -47,11 +48,6 @@
 
         public void CheckOutItem(int assetId, int libraryCardId)
         {
-            if (IsCheckedOut(assetId))
-            {
-                return;
-            }
-
             var now = DateTime.Now;
 
             var checkOut = new Checkout()
@@ -63,7 +59,7 @@
             };
 
             var libraryAsset = this.db.LibraryAssets.FirstOrDefault(l => l.Id == assetId);
-            libraryAsset.StatusId = 1;  // 1 checked out
+            libraryAsset.StatusId = (int)StatusType.CheckedOut;  
 
             this.db.Checkouts.Add(checkOut);
 
@@ -79,12 +75,12 @@
             this.db.SaveChanges();
         }
 
-        private bool IsCheckedOut(int assetId)
+        public bool IsCheckedOut(int assetId)
         {
             return this.db.Checkouts.Any(c => c.LibraryAssetId == assetId);
         }
 
-        public void CheckInItem(int assetId, int libraryCardId)
+        public void CheckInItem(int assetId)
         {
             var now = DateTime.Now;
 
@@ -119,7 +115,7 @@
             }
             else
             {
-                item.StatusId = 2;
+                item.StatusId = (int)StatusType.Available;
             }
             //otherwise update the item status to available
             this.db.SaveChanges();
@@ -148,12 +144,11 @@
 
         public void PlaceHold(int assetId, int libraryCardId)
         {
-            var asset = this.db.LibraryAssets.Find(assetId);
+            var asset = this.db.LibraryAssets.Include(a => a.Status).FirstOrDefault(a => a.Id == assetId);
 
             if (asset.Status.Name == "Available")
             {
-                asset.StatusId = 4;  //4 On hold
-
+                asset.StatusId = (int)StatusType.OnHold; 
             }
 
             var hold = new Hold()
@@ -186,21 +181,25 @@
 
         }
 
-        public IEnumerable<Hold> GetCurrentHolds(int assetId)
+        public IEnumerable<HoldServiceModel> GetCurrentHolds(int assetId)
         {
             return this.db
                 .Holds
-                .Include(h => h.LibraryAsset)
                 .Where(h => h.LibraryAssetId == assetId)
+                .Select(h => new HoldServiceModel
+                {
+                    PatronName = $"{h.LibraryCard.Patron.FirstName} {h.LibraryCard.Patron.LastName}",
+                    HoldPlaced = h.HoldPlaced.ToShortDateString()
+                })
                 .ToList();
-        }
+        }    // ToString("d")
 
 
         public void MarkLost(int assetId)
         {
             var asset = this.db.LibraryAssets.Find(assetId);
 
-            asset.StatusId = 3;    //3 - "lost"
+            asset.StatusId = (int)StatusType.Lost;   
 
             this.db.SaveChanges();
         }
@@ -210,7 +209,7 @@
             //Change the status to available
             var asset = this.db.LibraryAssets.Find(assetId);
 
-            asset.StatusId = 2;    //2 -  "Avaialable"
+            asset.StatusId = (int)StatusType.Available;   
 
             //remove any existing checkouts
             RemoveExistingCheckouts(assetId);
@@ -238,11 +237,12 @@
 
         private void RemoveExistingCheckouts(int assetId)
         {
-            var checkOut = this.db.Checkouts.FirstOrDefault(c => c.Id == assetId);
+            var checkOut = this.db.Checkouts.FirstOrDefault(c => c.LibraryAssetId == assetId);
 
             if (checkOut != null)
             {
                 this.db.Checkouts.Remove(checkOut);
+                this.db.SaveChanges();
             }
         }
     }
