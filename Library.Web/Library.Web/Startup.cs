@@ -26,6 +26,7 @@
 
             services.AddTransient<ILibraryAssetService, LibraryAssetService>();
             services.AddTransient<ICheckoutService, CheckoutService>();
+            services.AddTransient<IPatronService, PatronService>();
 
             services.AddMvc();
         }

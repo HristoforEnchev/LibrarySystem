@@ -105,6 +105,7 @@
 
 #catalog {
     background: url('/images/books.jpg') bottom right 15% no-repeat #555;
+    background-size: cover;
 }
 
 #catalogIndexTable {
@@ -120,8 +121,11 @@
     }
 
 #patrons {
-    background: url('/images/patron.jpeg') bottom left 15% no-repeat #555;
+    background: url('/images/patron.jpeg') bottom left 15% no-repeat #555 ;
+    background-size: cover;
 }
+
+
 
 .branchInfo {
     padding-top: 30px;
@@ -129,6 +133,8 @@
 
 #branches {
     background: url('/images/bldg.jpeg') bottom right 15% no-repeat #555;
+    background-size: cover;
+    
 }
 
 #assets {
@@ -237,3 +243,5 @@
     color: #2f6fc7;
     font-weight: bold;
 }
+
+
